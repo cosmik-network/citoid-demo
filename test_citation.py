@@ -16,7 +16,7 @@ def fetch_citation(url, format_type="zotero"):
         format_type: Citation format (mediawiki, mediawiki-basefields, zotero, bibtex)
 
     Returns:
-        dict: JSON response from the API or error details
+        dict: Response from the API or error details
     """
     try:
         # Encode the URL
@@ -36,10 +36,20 @@ def fetch_citation(url, format_type="zotero"):
         # Raise exception for bad status codes
         response.raise_for_status()
 
-        # Return JSON response
+        # Parse response based on format type
+        # BibTeX returns plain text, others return JSON
+        if format_type == 'bibtex':
+            data = response.text
+            is_json = False
+        else:
+            data = response.json()
+            is_json = True
+
         return {
             'success': True,
-            'data': response.json(),
+            'data': data,
+            'is_json': is_json,
+            'format_type': format_type,
             'api_url': api_url
         }
 
@@ -78,14 +88,22 @@ if __name__ == "__main__":
     if result['success']:
         print("✓ API call successful!")
         print(f"✓ API URL: {result['api_url']}")
-        print(f"✓ Retrieved {len(result['data'])} citation record(s)")
+        print(f"✓ Format type: {result['format_type']}")
+        print(f"✓ Response is JSON: {result['is_json']}")
 
-        if isinstance(result['data'], list) and len(result['data']) > 0:
-            citation = result['data'][0]
-            print(f"\nCitation Details:")
-            print(f"  - Title: {citation.get('title', 'N/A')}")
-            print(f"  - Type: {citation.get('itemType', 'N/A')}")
-            print(f"  - URL: {citation.get('url', 'N/A')}")
+        if result['is_json']:
+            print(f"✓ Retrieved {len(result['data'])} citation record(s)")
+            if isinstance(result['data'], list) and len(result['data']) > 0:
+                citation = result['data'][0]
+                print(f"\nCitation Details:")
+                print(f"  - Title: {citation.get('title', 'N/A')}")
+                print(f"  - Type: {citation.get('itemType', 'N/A')}")
+                print(f"  - URL: {citation.get('url', 'N/A')}")
+        else:
+            print(f"✓ Retrieved text response ({len(result['data'])} characters)")
+            print(f"\nFirst 200 characters of response:")
+            print(result['data'][:200] + "..." if len(result['data']) > 200 else result['data'])
+
         print("\n✓ All tests passed!")
     else:
         print(f"✗ API call failed: {result['error']}")

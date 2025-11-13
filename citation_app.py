@@ -18,7 +18,7 @@ def fetch_citation(url, format_type="zotero"):
         format_type: Citation format (mediawiki, mediawiki-basefields, zotero, bibtex)
 
     Returns:
-        dict: JSON response from the API or error details
+        dict: Response from the API or error details
     """
     try:
         # Encode the URL
@@ -38,10 +38,20 @@ def fetch_citation(url, format_type="zotero"):
         # Raise exception for bad status codes
         response.raise_for_status()
 
-        # Return JSON response
+        # Parse response based on format type
+        # BibTeX returns plain text, others return JSON
+        if format_type == 'bibtex':
+            data = response.text
+            is_json = False
+        else:
+            data = response.json()
+            is_json = True
+
         return {
             'success': True,
-            'data': response.json(),
+            'data': data,
+            'is_json': is_json,
+            'format_type': format_type,
             'api_url': api_url
         }
 
@@ -129,18 +139,32 @@ def main():
                 with st.expander("🔗 API Request Details"):
                     st.code(result['api_url'], language="text")
 
-                # Display the JSON response
+                # Display the response based on format type
                 st.subheader("Citation Metadata")
-                st.json(result['data'])
 
-                # Download button for JSON
-                json_str = json.dumps(result['data'], indent=2)
-                st.download_button(
-                    label="📥 Download JSON",
-                    data=json_str,
-                    file_name="citation_metadata.json",
-                    mime="application/json"
-                )
+                if result['is_json']:
+                    # Display JSON formats (zotero, mediawiki, mediawiki-basefields)
+                    st.json(result['data'])
+
+                    # Download button for JSON
+                    json_str = json.dumps(result['data'], indent=2)
+                    st.download_button(
+                        label="📥 Download JSON",
+                        data=json_str,
+                        file_name=f"citation_{result['format_type']}.json",
+                        mime="application/json"
+                    )
+                else:
+                    # Display text formats (bibtex)
+                    st.code(result['data'], language="bibtex")
+
+                    # Download button for text
+                    st.download_button(
+                        label="📥 Download BibTeX",
+                        data=result['data'],
+                        file_name="citation.bib",
+                        mime="text/plain"
+                    )
             else:
                 st.error(f"❌ Error: {result['error']}")
 
