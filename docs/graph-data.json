@@ -1,0 +1,171 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "change_id": "54d2956b-fea0-48fe-b282-a33e9680c85b",
+      "node_type": "goal",
+      "title": "Add Zotero translator server comparison",
+      "description": null,
+      "status": "pending",
+      "created_at": "2025-12-30T18:43:07.374004-05:00",
+      "updated_at": "2025-12-30T18:43:07.374004-05:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":90,\"prompt\":\"I want to add a new section to this streamlit app that will provide a parallel input option for fetching citation data, using our AWS deployment of the Zotero translators framework https://github.com/cosmik-network/zotero-translator-server. This will enable comparing our deployment to the Citoid API.\\n\\nWe should support both the search and web api endpoints, eg \\n# Example: Search by DOI\\ncurl -H \\\"x-api-key: YOUR-API-KEY\\\" \\\\\\n  -H \\\"Content-Type: text/plain\\\" \\\\\\n  -d \\\"10.2307/4486062\\\" \\\\\\n  \\\"${API_URL}/search\\\"\\n\\n# Example: Translate a webpage\\ncurl -H \\\"x-api-key: YOUR-API-KEY\\\" \\\\\\n  -H \\\"Content-Type: text/plain\\\" \\\\\\n  -d \\\"https://arxiv.org/abs/2301.00001\\\" \\\\\\n  \\\"${API_URL}/web\\\"\\n\\n\\nAPI_URL and API-KEY should be stored as environment secrets\"}"
+    },
+    {
+      "id": 2,
+      "change_id": "cbe9981e-bc71-477a-955d-beeb5f7e785b",
+      "node_type": "decision",
+      "title": "Add python-dotenv for environment secrets",
+      "description": null,
+      "status": "pending",
+      "created_at": "2025-12-30T18:43:34.123351-05:00",
+      "updated_at": "2025-12-30T18:43:34.123351-05:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":95}"
+    },
+    {
+      "id": 3,
+      "change_id": "2f56c40e-c258-4222-8d26-8e1246f26c3a",
+      "node_type": "action",
+      "title": "Implementing Zotero API integration",
+      "description": null,
+      "status": "pending",
+      "created_at": "2025-12-30T18:44:37.758122-05:00",
+      "updated_at": "2025-12-30T18:44:37.758122-05:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":85}"
+    },
+    {
+      "id": 4,
+      "change_id": "b0aa8b62-6a80-4288-bbb0-03a1009a6e81",
+      "node_type": "action",
+      "title": "Creating setup documentation",
+      "description": null,
+      "status": "pending",
+      "created_at": "2025-12-30T18:47:11.358842-05:00",
+      "updated_at": "2025-12-30T18:47:11.358842-05:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":85}"
+    },
+    {
+      "id": 5,
+      "change_id": "70a37f66-b70a-41c2-88cb-09863922f7db",
+      "node_type": "outcome",
+      "title": "Zotero translator integration complete",
+      "description": null,
+      "status": "pending",
+      "created_at": "2025-12-30T18:48:24.959979-05:00",
+      "updated_at": "2025-12-30T18:48:24.959979-05:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":90}"
+    },
+    {
+      "id": 6,
+      "change_id": "ea5eff04-15c3-4009-9bd3-d9deb0cfa2c4",
+      "node_type": "goal",
+      "title": "Add Streamlit Cloud secrets management",
+      "description": null,
+      "status": "pending",
+      "created_at": "2025-12-30T18:53:50.107370-05:00",
+      "updated_at": "2025-12-30T18:53:50.107370-05:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":90,\"prompt\":\"Help me create a sample secrets file for my streamlit deployment based on https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management\"}"
+    },
+    {
+      "id": 7,
+      "change_id": "d41cbcbd-a464-444a-9758-cd75f9c511e5",
+      "node_type": "action",
+      "title": "Updating app for Streamlit secrets support",
+      "description": null,
+      "status": "pending",
+      "created_at": "2025-12-30T18:54:31.955004-05:00",
+      "updated_at": "2025-12-30T18:54:31.955004-05:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":85}"
+    },
+    {
+      "id": 8,
+      "change_id": "d06bfa08-b276-450e-aab0-779f67815f97",
+      "node_type": "outcome",
+      "title": "Streamlit secrets management implemented",
+      "description": null,
+      "status": "pending",
+      "created_at": "2025-12-30T18:56:57.556901-05:00",
+      "updated_at": "2025-12-30T18:56:57.556901-05:00",
+      "metadata_json": "{\"branch\":\"main\",\"confidence\":95}"
+    }
+  ],
+  "edges": [
+    {
+      "id": 1,
+      "from_node_id": 1,
+      "to_node_id": 2,
+      "from_change_id": "54d2956b-fea0-48fe-b282-a33e9680c85b",
+      "to_change_id": "cbe9981e-bc71-477a-955d-beeb5f7e785b",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "Need secure storage for API credentials",
+      "created_at": "2025-12-30T18:43:51.806237-05:00"
+    },
+    {
+      "id": 2,
+      "from_node_id": 1,
+      "to_node_id": 3,
+      "from_change_id": "54d2956b-fea0-48fe-b282-a33e9680c85b",
+      "to_change_id": "2f56c40e-c258-4222-8d26-8e1246f26c3a",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "Implementing Zotero translator integration for comparison",
+      "created_at": "2025-12-30T18:44:48.595081-05:00"
+    },
+    {
+      "id": 3,
+      "from_node_id": 1,
+      "to_node_id": 4,
+      "from_change_id": "54d2956b-fea0-48fe-b282-a33e9680c85b",
+      "to_change_id": "b0aa8b62-6a80-4288-bbb0-03a1009a6e81",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "Documentation for setup and usage",
+      "created_at": "2025-12-30T18:47:18.848596-05:00"
+    },
+    {
+      "id": 4,
+      "from_node_id": 3,
+      "to_node_id": 5,
+      "from_change_id": "2f56c40e-c258-4222-8d26-8e1246f26c3a",
+      "to_change_id": "70a37f66-b70a-41c2-88cb-09863922f7db",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "Successfully implemented API integration",
+      "created_at": "2025-12-30T18:48:39.031024-05:00"
+    },
+    {
+      "id": 5,
+      "from_node_id": 4,
+      "to_node_id": 5,
+      "from_change_id": "b0aa8b62-6a80-4288-bbb0-03a1009a6e81",
+      "to_change_id": "70a37f66-b70a-41c2-88cb-09863922f7db",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "Documentation created",
+      "created_at": "2025-12-30T18:48:39.037931-05:00"
+    },
+    {
+      "id": 6,
+      "from_node_id": 6,
+      "to_node_id": 7,
+      "from_change_id": "ea5eff04-15c3-4009-9bd3-d9deb0cfa2c4",
+      "to_change_id": "d41cbcbd-a464-444a-9758-cd75f9c511e5",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "Implementing secrets management for Streamlit Cloud",
+      "created_at": "2025-12-30T18:55:03.773793-05:00"
+    },
+    {
+      "id": 7,
+      "from_node_id": 7,
+      "to_node_id": 8,
+      "from_change_id": "d41cbcbd-a464-444a-9758-cd75f9c511e5",
+      "to_change_id": "d06bfa08-b276-450e-aab0-779f67815f97",
+      "edge_type": "leads_to",
+      "weight": 1.0,
+      "rationale": "Successfully implemented Streamlit secrets support",
+      "created_at": "2025-12-30T18:57:04.864903-05:00"
+    }
+  ]
+}
